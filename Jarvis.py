@@ -44,7 +44,7 @@ def intro() :
 		
 	"""
 	
-	print "%s%s Hello! I am Jarvis, the AI bot. pleasec to meet you, %s . \n" %(BOT_NAME[0], MISC_BOT, USER_NAME[0])
+	print "%s%s Hello! I am Jarvis, the AI bot. pleased to meet you, %s . \n" %(BOT_NAME[0], MISC_BOT, USER_NAME[0])
 	cn = raw_input("%s%s If you would like me to call you by your name. I can, just simply say yes or no : " %(BOT_NAME[0], MISC_BOT))
 	if str(cn.lower()) in JCOMTRUE :
 		un = raw_input("%s%s Type the name that you wish to be called : " %(BOT_NAME[0], MISC_BOT))
