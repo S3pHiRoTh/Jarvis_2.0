@@ -17,16 +17,22 @@ import os
 # Import Independant Jarvis classes 
 import JarvisTopics, JarvisRandomQuestion
 
-# Global Variable
 # Jarvis's botname variable
 BOT_NAME = ['Jarvis']
-POSSIBLE_EXIT_COM = ['exit', 'leave', 'cya', 'bye'] 
 MISC_BOT = " : "
+USER_NAME = ['user']
+
+# Bot TRUE/FALSE replies
+# {POSSIBLE_EXIT_COM = Exit response for function UserResponse() }
+# {JCOMTRUE = True commands for intro() }
+# {JCOMFALSE = False commands for intro() }
+POSSIBLE_EXIT_COM = ['exit', 'leave', 'cya', 'bye']
+JCOMTRUE = ("y", "yes", "yes please", "yep", "change my name", "name change", "yeah")
+JCOMFALSE = ("n", "no", "im not bothered", "no thanks", "nope", "user is fine")
 
 def intro() :
 	# Global variables
 	global un
-	
 	print \
 	"""
 				Jarvis Bot [V.2.0]
@@ -37,13 +43,27 @@ def intro() :
 		
 		
 	"""
-	# User Variables
-	un = raw_input("%s%s User, please type your Name : " %(BOT_NAME[0], MISC_BOT))
+	
+	print "%s%s Hello! I am Jarvis, the AI bot. pleasec to meet you, %s . \n" %(BOT_NAME[0], MISC_BOT, USER_NAME[0])
+	cn = raw_input("%s%s If you would like me to call you by your name. I can, just simply say yes or no : " %(BOT_NAME[0], MISC_BOT))
+	if str(cn.lower()) in JCOMTRUE :
+		un = raw_input("%s%s Type the name that you wish to be called : " %(BOT_NAME[0], MISC_BOT))
+		USER_NAME.remove("user")
+		USER_NAME.append(un)
+		print "%s%s username changed successfully to %s! " %(BOT_NAME[0], MISC_BOT, USER_NAME[0])
+		Jarvis_Start()
+	elif str(cn.lower()) in JCOMFALSE :
+		print "%s%s so you're fine with %s . " %(BOT_NAME[0], MISC_BOT, USER_NAME[0])
+	else :
+		raw_input("%s%s Input not recognized! " %(BOT_NAME[0], MISC_BOT))
+		system('cls')
+		intro()
+		
 	Jarvis_Start()
 	
 def Jarvis_Start() :
 	print "\n"
-	print "%s%s Hi i'm Jarvis, Nice to meet you, %s! Don't be shy to ask me a question! \n" %(BOT_NAME[0], MISC_BOT, un)
+	print "%s%s Hi i'm Jarvis, Nice to meet you, %s! Don't be shy to ask me a question! \n" %(BOT_NAME[0], MISC_BOT, USER_NAME[0])
 	
 	UserResponse()
 	
@@ -51,10 +71,10 @@ def UserResponse() :
 	# This functions global variables
 	None
 	# User input
-	UI = raw_input("%s%s Ask me a question ( I respond to commands like ( Exit, Help ) : " %(BOT_NAME[0], MISC_BOT))
+	UI = raw_input("%s%s Ask me a question %s ( I respond to commands like ( Exit, Help ) : " %(BOT_NAME[0], MISC_BOT, USER_NAME[0]))
 	# I'll start writing the console commands first, then onto the actual response code.
 	if (str(UI.lower())) in POSSIBLE_EXIT_COM :
-		print "%s%s I will now shutdown. Goodbye %s . " %(BOT_NAME[0], MISC_BOT, un)
+		print "%s%s I will now shutdown. Goodbye %s . " %(BOT_NAME[0], MISC_BOT, USER_NAME[0])
 		raw_input()
 		exit()	
 	elif (str(UI.lower()) == "help") :
@@ -74,7 +94,7 @@ def UserResponse() :
 		print "\n"
 		help()
 	else :
-		print "%s%s Hmm, i didn't recognize that input :( . Can you try again? \n" %(BOT_NAME[0], MISC_BOT)
+		print "%s%s Hmm, i didn't recognize that input :( . Can you try again? \n" %(BOT_NAME[0], MISC_BOT, USER_NAME[0])
 		UserResponse()
 
 def help() :
@@ -83,12 +103,14 @@ def help() :
 	print "\n"
 	# Jarvis help function 
 	if (HelpUI == "1") :
-		print "How to correct interact with Jarvis : To interact with Jarvis properly, be specific with your inputs for example to ask Jarvis a question about how he is, make sure you use the keywords like 'How are you' 'how do you feel Jarvis?'. As long as you write keywords jarvis will recognize them and reply to you"
+		print "How to correctly interact with Jarvis : To interact with Jarvis properly, be specific with your inputs for example to ask Jarvis a question about how he is, make sure you use the keywords like 'How are you' 'how do you feel Jarvis?'. As long as you write keywords jarvis will recognize them and reply to you"
 	elif (HelpUI == "2") :
 		print "Heh, you will have to try allsorts of hidden keywords. Goodluck!"
 	elif (HelpUI == "3") :
 		print "Why would you want to rename Jarvis? :( . But, since you requested to rename Jarvis, you can :-) . \n"
 		RenameJarvis()
+	elif (HelpUI == "4") :
+		UserResponse()
 	else :
 		print "%s%s %s wasn't recognized. Please try again." %(BOT_NAME[0], MISC_BOT, HelpUI)
 		help()

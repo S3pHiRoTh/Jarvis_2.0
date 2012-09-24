@@ -9,6 +9,10 @@
 
 class Jarvis_Topics(object) :
 	""" Jarvis Topics """
-	def General(self,question, answer) :
-		self.question = quesion
-		self.answer = answer
+	def General(self, question) :
+		self.question = question
+	
+	def General_Output(self, output) :
+		self.output = output
+		
+# Main code test
