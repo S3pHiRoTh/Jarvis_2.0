@@ -20,6 +20,7 @@ import JarvisTopics, JarvisRandomQuestion
 # Global Variable
 # Jarvis's botname variable
 BOT_NAME = ['Jarvis']
+POSSIBLE_EXIT_COM = ['exit', 'leave', 'cya', 'bye'] 
 MISC_BOT = " : "
 
 def intro() :
@@ -52,7 +53,7 @@ def UserResponse() :
 	# User input
 	UI = raw_input("%s%s Ask me a question ( I respond to commands like ( Exit, Help ) : " %(BOT_NAME[0], MISC_BOT))
 	# I'll start writing the console commands first, then onto the actual response code.
-	if (str(UI.lower())) == "exit" or "quit" or "leave" or "bye" or "cya" :
+	if (str(UI.lower())) in POSSIBLE_EXIT_COM :
 		print "%s%s I will now shutdown. Goodbye %s . " %(BOT_NAME[0], MISC_BOT, un)
 		raw_input()
 		exit()	
@@ -88,6 +89,9 @@ def help() :
 	elif (HelpUI == "3") :
 		print "Why would you want to rename Jarvis? :( . But, since you requested to rename Jarvis, you can :-) . \n"
 		RenameJarvis()
+	else :
+		print "%s%s %s wasn't recognized. Please try again." %(BOT_NAME[0], MISC_BOT, HelpUI)
+		help()
 		
 def RenameJarvis() :
 	# Rename Jarvis function
