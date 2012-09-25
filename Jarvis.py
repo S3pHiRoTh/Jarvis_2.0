@@ -104,7 +104,7 @@ def UserResponse() :
 		print "%s%s I don't respond to empty spaces. " %(BOT_NAME[0], MISC_BOT)
 		UserResponse()
 	elif (str(UI.lower())) in JarvisTellTheTime :
-		print "%s%s The current time is %s" %(BOT_NAME[0], MISC_BOT, JarvisTopics.JarvisTellTime())
+		print "%s%s The current time is : " %(BOT_NAME[0], MISC_BOT), JarvisTopics.JarvisTellTime()
 		UserResponse()
 	else :
 		print "%s%s Hmm, i didn't recognize that input :( . Can you try again? \n" %(BOT_NAME[0], MISC_BOT, USER_NAME[0])

@@ -14,5 +14,5 @@ import random
 from time import gmtime, strftime
 
 def JarvisTellTime() :
-	strftime("%a, %d %b %Y %H:%M:%S +0000 \n", gmtime())
+	print strftime("%a, %d %b %Y %H:%M:%S +0000 \n", gmtime())
 	return 
