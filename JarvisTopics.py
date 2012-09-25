@@ -7,12 +7,12 @@
 
 """
 
-class Jarvis_Topics(object) :
-	""" Jarvis Topics """
-	def General(self, question) :
-		self.question = question
-	
-	def General_Output(self, output) :
-		self.output = output
-		
-# Main code test
+# Import Nessesary framework
+import random
+
+# Import Specific framework
+from time import gmtime, strftime
+
+def JarvisTellTime() :
+	strftime("%a, %d %b %Y %H:%M:%S +0000 \n", gmtime())
+	return 

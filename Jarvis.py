@@ -22,13 +22,18 @@ BOT_NAME = ['Jarvis']
 MISC_BOT = " : "
 USER_NAME = ['user']
 
+# Error catching for UserResponse() Function
+ERROR = " "
+
 # Bot TRUE/FALSE replies
 # {POSSIBLE_EXIT_COM = Exit response for function UserResponse() }
 # {JCOMTRUE = True commands for intro() }
 # {JCOMFALSE = False commands for intro() }
+# {JarvisTellTheTime = Function for telling the time }
 POSSIBLE_EXIT_COM = ['exit', 'leave', 'cya', 'bye']
-JCOMTRUE = ("y", "yes", "yes please", "yep", "change my name", "name change", "yeah")
+JCOMTRUE = ("y", "yes", "yes please", "yep", "change my name", "name change", "yeah", "ye")
 JCOMFALSE = ("n", "no", "im not bothered", "no thanks", "nope", "user is fine")
+JarvisTellTheTime = ( "time", "whats the current time", "tell the time", "whats the time?" )
 
 def intro() :
 	# Global variables
@@ -68,10 +73,11 @@ def Jarvis_Start() :
 	UserResponse()
 	
 def UserResponse() :
+	# This function is soon going to be transfered to its own independant class file. Because it will be slowing down the main src.
 	# This functions global variables
 	None
 	# User input
-	UI = raw_input("%s%s Ask me a question %s ( I respond to commands like ( Exit, Help ) : " %(BOT_NAME[0], MISC_BOT, USER_NAME[0]))
+	UI = raw_input("%s%s Ask me a question %s, ( I respond to commands like ( Exit, Help ) : " %(BOT_NAME[0], MISC_BOT, USER_NAME[0]))
 	# I'll start writing the console commands first, then onto the actual response code.
 	if (str(UI.lower())) in POSSIBLE_EXIT_COM :
 		print "%s%s I will now shutdown. Goodbye %s . " %(BOT_NAME[0], MISC_BOT, USER_NAME[0])
@@ -89,14 +95,21 @@ def UserResponse() :
 		3 - Want to rename Jarvis? You can!
 		4 - Return to asking Jarvis a question
 		"""
-			
+		
 		# Go to the help options function
 		print "\n"
 		help()
+	# Error catching
+	elif UI in ERROR :
+		print "%s%s I don't respond to empty spaces. " %(BOT_NAME[0], MISC_BOT)
+		UserResponse()
+	elif (str(UI.lower())) in JarvisTellTheTime :
+		print "%s%s The current time is %s" %(BOT_NAME[0], MISC_BOT, JarvisTopics.JarvisTellTime())
+		UserResponse()
 	else :
 		print "%s%s Hmm, i didn't recognize that input :( . Can you try again? \n" %(BOT_NAME[0], MISC_BOT, USER_NAME[0])
 		UserResponse()
-
+		
 def help() :
 	HelpUI = raw_input("Enter your choice from the list above. [ Usage : For example to request help on interacting with Jarvis, press 1 ] : ")
 	# Make the text in the console easier to read
