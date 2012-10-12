@@ -14,6 +14,9 @@ from random import choice
 # Import whole Framework module
 import os, sqlite3 # Sqlite3 will be used later to create the Jarvis response Database.
 
+# Import Time telling modules
+from time import gmtime, strftime
+
 # Import Independant Jarvis Classes
 None 	# None at the moment. They will be added later
 
@@ -88,7 +91,10 @@ class Jarvis(object) :
 			print "%s%s I don't respond to empty spaces. " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT)
 			self.UserResponse()
 		elif (str(UI.lower())) in JarvisMainVar.JarvisTellTheTime :
-			print "%s%s The current time is : " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT), JarvisTopics.JarvisTellTime()
+			# Call Jarvis time keeping class
+			JT = JarvisTimeKeeping()
+			JT.JTime()
+			print "%s%s The current time is : " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT), JT.JTime()
 			self.UserResponse()
 		else :
 			print "%s%s Hmm, i didn't recognize that input :( . Can you try again? \n" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
@@ -147,6 +153,12 @@ class RenameClass(object) :
 		un = raw_input("%s%s Type the name that you wish to be called : " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT))
 		JarvisMainVar.USER_NAME.remove("user")
 		JarvisMainVar.USER_NAME.append(un)
+
+class JarvisTimeKeeping(object) :
+	""" Jarvis time telling class """
+	
+	def JTime(self) :
+		print strftime("%a, %d %b %Y %H:%M:%S \n", gmtime())
 		
 class JarvisMainVar(object) :
 	""" Jarvis's variable storage class. All the main variables go into this class. """
