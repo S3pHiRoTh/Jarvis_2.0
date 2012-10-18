@@ -11,8 +11,9 @@
 import random
 
 # Import Specific framework
-from time import gmtime, strftime
 
-def JarvisTellTime() :
-	print strftime("%a, %d %b %Y %H:%M:%S +0000 \n", gmtime())
-	return 
+class JarvisTopics(object) :
+	""" Class for Jarvis topics """
+	def __init__(self) :
+		""" Jarvis Topics class constructor """
+ 
