@@ -40,13 +40,58 @@ class JarvisVoiceAPI(object) :
 		self.JarvisVAPI.say(strftime("The current time is %a, %d %b %Y %H:%M:%S \n", gmtime()))
 		self.JarvisVAPI.runAndWait()
 		
+	def JarvisWelcomeHelpAudio(self) :
+		self.JarvisVAPI.say("%s" %(Jarvis.JarvisHelp.JF))
+		self.JarvisVAPI.runAndWait()
+		
+	def JarvisHelpUIAudio(self) :
+		self.JarvisVAPI.say("Enter your choice from the list above.")
+		self.JarvisVAPI.say("Usage. For example to request help on interacting with Jarvis, press 1 . ")
+		self.JarvisVAPI.runAndWait()
+		
+	def JarvisHelpDialogue(self) :
+		self.JarvisVAPI.say("%s" %(Jarvis.JarvisMainVar.JD1))
+		self.JarvisVAPI.say("%s" %(Jarvis.JarvisMainVar.JD2))
+		self.JarvisVAPI.say("%s" %(Jarvis.JarvisMainVar.JD3))
+		self.JarvisVAPI.runAndWait()
+		
+	def JarvisHiddenCom(self) :
+		self.JarvisVAPI.say("Heh, you will have to try allsorts of hidden keywords. Goodluck!")
+		self.JarvisVAPI.runAndWait()
+		
+	def JarvisRenameAudio(self) :
+		self.JarvisVAPI.say("Why would you want to rename me?")
+		self.JarvisVAPI.say("But, since you requested to rename me, you can!")
+		self.JarvisVAPI.runAndWait()
+		
+	def BotRenameAudio(self) :
+		self.JarvisVAPI.say("Type the name you would like to rename me to. ")
+		self.JarvisVAPI.runAndWait()
+	
+	def BotRenameSuccess(self) :
+		self.JarvisVAPI.say("I have successfully been renamed!")
+		self.JarvisVAPI.say("But i'm not so sure that i like my new name!")
+		self.JarvisVAPI.runAndWait()
+		
 	def JarvisHelpAudio(self) :
-		self.JarvisVAPI.say("help!")
+		self.JarvisVAPI.say("Welcome to the help menu.")
+		self.JarvisVAPI.say("To select an option simply enter the number that it's allocated to.")
 		self.JarvisVAPI.runAndWait()
 		
 	def JarvisERROR(self) :
 		self.JarvisVAPI.say("Input not recognized! ")
 		self.JarvisVAPI.runAndWait()
+		
+	def JarvisHelpERROR(self) :
+		self.JarvisVAPI.say("Hey, i did not find that requested help function in my database.")
+		self.JarvisVAPI.say("Can you try again for me? Make sure the number you chose is valid.")
+		self.JarvisVAPI.say("Thank you!")
+		self.JarvisVAPI.runAndWait()
+		
+	def JarvisEmpty(self) :
+		self.JarvisVAPI.say("I don't respond to empty spaces.")
+		self.JarvisVAPI.runAndWait()
+		
 		
 		
 		
