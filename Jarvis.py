@@ -22,7 +22,16 @@ import JarvisVoiceAPI, JarvisTopics, JarvisRandomQuestion, JarvisResponseDB, Jar
 
 class Jarvis(object) :
 	""" This will be the main Jarvis Class """
+	
 	def __init__(self) :
+		# Call the {JarvisVoiceAPI} Class file
+		self.JarvisClassVoiceAPI = JarvisVoiceAPI.JarvisVoiceAPI()
+	
+		# Call the {MiscJarvisAudio} Class
+		self.JarvisMiscAudioClass = MiscJarvisAudio()
+		
+		# Call the {JarvisHelp} Class
+		self.sh = JarvisHelp()
 		
 		""" This constructor will create the introduction to Jarvis """
 		
@@ -37,22 +46,20 @@ class Jarvis(object) :
 	def Jarvis_Intro(self) :
 		""" All the option code will be written in this method """
 		print "%s%s Hello! I am Jarvis, the AI bot. pleased to meet you, %s . \n" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
-		JVAPI = JarvisVoiceAPI.JarvisVoiceAPI()
-		JVAPI.JarvisIntroVAPI()
-		JVAPI.JarvisQuestionAudio()
+		self.JarvisClassVoiceAPI.JarvisIntroVAPI()
+		self.JarvisClassVoiceAPI.JarvisQuestionAudio()
 		cn = raw_input("%s%s If you would like me to call you by your name. I can, just simply say yes or no : " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT))
 		if str(cn.lower()) in JarvisMainVar.JCOMTRUE :
 			RU = RenameClass()
 			RU.RenUTRUE()
 			print "%s%s username changed successfully to %s! " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
-			JVMAPI = MiscJarvisAudio()
-			JVMAPI.JarvisRNTrue()
+			self.JarvisMiscAudioClass.JarvisRNTrue()
 			self.Jarvis_Start()
 		elif str(cn.lower()) in JarvisMainVar.JCOMFALSE :
 			print "%s%s so you're fine with %s . " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
-			JVAPI.JarvisQuestRenUFALSE()
+			self.JarvisClassVoiceAPI.JarvisQuestRenUFALSE()
 		else :
-			JVAPI.JarvisERROR()
+			self.JarvisClassVoiceAPI.JarvisERROR()
 			raw_input("%s%s Input not recognized! " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT))
 			system('cls')
 			self.Jarvis_Intro()
@@ -61,18 +68,16 @@ class Jarvis(object) :
 		
 	def Jarvis_Start(self) :
 		print "\n"
-		print "%s%s Hi i'm Jarvis, Nice to meet you, %s! Don't be shy to ask me a question! \n" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
+		print "%s%s Nice to meet you, %s! Don't be shy to ask me a question! \n" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
 		# Jarvis VAPI ( Voice API )
-		JVAPIW = MiscJarvisAudio()
-		JVAPIW.JarvisWelcome()
+		self.JarvisMiscAudioClass.JarvisWelcome()
 		self.UserResponse()
 	
 	def UserResponse(self) :
 		# This function is soon going to be transfered to its own independant class file. Because it will be slowing down the main src.
 		# User input
-		JVAPIUR = MiscJarvisAudio()
 		print "%s%s Ask me a question %s, ( I respond to commands like ( Exit, Help ) : " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
-		JVAPIUR.JarvisAskQuestion()
+		self.JarvisMiscAudioClass.JarvisAskQuestion()
 		self.UserInput()
 		
 	def UserInput(self) :
@@ -80,8 +85,7 @@ class Jarvis(object) :
 		UI = raw_input()
 		if (str(UI.lower())) in JarvisMainVar.POSSIBLE_EXIT_COM :
 			print "%s%s I will now shutdown. Goodbye %s . " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
-			JVAPIEX = MiscJarvisAudio()
-			JarvisExitAudio()
+			self.JarvisMiscAudioClass.JarvisExitAudio()
 			raw_input()
 			exit()
 		elif (str(UI.lower()) == "help") :
@@ -96,36 +100,38 @@ class Jarvis(object) :
 			3 - Want to rename Jarvis? You can!
 			4 - Return to asking Jarvis a question
 			"""
-		
+			self.JarvisClassVoiceAPI.JarvisHelpAudio()
 			# Go to the help options function
 			print "\n"
-			sh = JarvisHelp()
-			sh.help()
+			self.sh.help()
 			
 		# Error catching
 		elif UI in JarvisMainVar.ERROR :
 			print "%s%s I don't respond to empty spaces. " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT)
+			self.JarvisClassVoiceAPI.JarvisEmpty()
+			raw_input()
 			self.UserResponse()
 		elif (str(UI.lower())) in JarvisMainVar.JarvisTellTheTime :
 			# Call Jarvis time keeping class
 			JT = JarvisTimeKeeping()
 			JT.JTime()
 			# JVAPITIME is the code that calls the Voice API time telling class.
-			JVAPITIME= JarvisVoiceAPI.JarvisVoiceAPI()
-			JVAPITIME.JarvisVoiceTellTime()
+			self.JarvisClassVoiceAPI.JarvisVoiceTellTime()
 			print "%s%s The current time is : " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT), JT.JTime()
 			self.JarvisNewQuestQuery()
 		else :
 			print "%s%s Hmm, i didn't recognize that input :( . Can you try that again %s? \n" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
-			raw_input()
+			self.JarvisMiscAudioClass.JarvisInputError()
 			self.UserResponse()
 			
 	def JarvisQuestError(self) :
-		print "%s%s Ask me something else, %s . " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
+		print "%s%s Try again, %s . But try to be more specific. I only have so much processing power!" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
+		self.JarvisMiscAudioClass.JarvisTryAgainErr()
 		
 	def JarvisNewQuestQuery(self) :
 		print "%s%s Ask me something else, %s . " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
-		return self.UserInput()
+		self.JarvisMiscAudioClass.JarvisNewAudioQuery()
+		self.UserInput()
 		
 		
 class JarvisHelp(object) :
@@ -134,50 +140,72 @@ class JarvisHelp(object) :
 	
 	def __init__(self) :
 		""" Jarvis's  Help constructor """
-		print "%s%s %s" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, self.JF)
+		
+		# Call the {JarvisVoiceAPI} Class file
+		self.JarvisClassVoiceAPI = JarvisVoiceAPI.JarvisVoiceAPI()
+	
+		# Call the {MiscJarvisAudio} Class
+		self.JarvisMiscAudioClass = MiscJarvisAudio()
+		
+		# Call the {RenameClass} Class
+		self.RenJ = RenameClass()
 		
 	def help(self) :
-		HelpUI = raw_input("Enter your choice from the list above. [ Usage : For example to request help on interacting with Jarvis, press 1 ] : ")
+		print "%s%s %s" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, self.JF)
+		self.JarvisClassVoiceAPI.JarvisWelcomeHelpAudio()
+		self.JarvisClassVoiceAPI.JarvisHelpUIAudio()
+		HelpUI = raw_input("%s%s Enter your choice from the list above. [ Usage : For example to request help on interacting with Jarvis, press 1 ] : " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT))
 		# Make the text in the console easier to read
 		print "\n"
 		# Jarvis help function 
 		if (HelpUI == "1") :
 			print "%s%s %s%s%s \n"  %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.JD1, JarvisMainVar.JD2, JarvisMainVar.JD3)
+			self.JarvisClassVoiceAPI.JarvisHelpDialogue()
 			self.help()
 		elif (HelpUI == "2") :
 			print "%s%s Heh, you will have to try allsorts of hidden keywords. Goodluck!"  %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT)
+			self.JarvisClassVoiceAPI.JarvisHiddenCom()
+			self.help()
 		elif (HelpUI == "3") :
-			RenJ = RenameClass()
-			RenJ.RenJTRUE()
+			self.RenJ.RenJTRUE()
 			self.help()
 		elif (HelpUI == "4") :
-			RT = Jarvis()
-			RT.UserResponse()
+			# Call the {Jarvis} Class
+			self.RT = Jarvis()
+			self.RT.UserResponse()
 		else :
 			print "%s%s %s wasn't recognized. Please try again." %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, HelpUI)
-			RET_HELP = JarvisHelp()
+			self.JarvisClassVoiceAPI.JarvisHelpERROR()
+			self.help()
 
 class RenameClass(object) :
 	""" Class to rename Jarvis. """
 	
 	# This is in a seperate class so that each class can have its own Main functions and methods.
+	
 	def __init__(self) :
 		""" Rename constructor. May need to add something here in the future. """
 		
+		# Call the {JarvisVoiceAPI} Class file
+		self.JarvisClassVoiceAPI = JarvisVoiceAPI.JarvisVoiceAPI()
+		
 	def RenJTRUE(self) :
 		print "%s%s Why would you want to rename me? :( . But, since you requested to rename me, you can :-) . \n" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT)
+		# Jarvis speaks out the above message to the user.
+		self.JarvisClassVoiceAPI.JarvisRenameAudio()
 		# Rename Jarvis class method.
-		BOT_RENAME = raw_input("Type the name you would like to rename Jarvis to : ")
+		self.JarvisClassVoiceAPI.BotRenameAudio()
+		BOT_RENAME = raw_input("Type the name you would like to rename me to : ")
 		JarvisMainVar.BOT_NAME.remove('Jarvis')
 		JarvisMainVar.BOT_NAME.append(BOT_RENAME)
 		print "%s%s I have successfully been renamed! \n" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT)
-	
+		self.JarvisClassVoiceAPI.BotRenameSuccess()
+		
 	def RenUTRUE(self) :
 		# Rename User class method.
 		
 		# Jarvis's voice Audio for the below input
-		JVAPIRN = JarvisVoiceAPI.JarvisVoiceAPI()
-		JVAPIRN.JarvisQuestRenUTRUE()
+		self.JarvisClassVoiceAPI.JarvisQuestRenUTRUE()
 		
 		un = raw_input("%s%s Type the name that you wish to be called : " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT))
 		
@@ -195,7 +223,7 @@ class MiscJarvisAudio(object) :
 		self.JarvisMISCVAPI.runAndWait()
 		
 	def JarvisWelcome(self) :
-		self.JarvisMISCVAPI.say("Hi i'm Jarvis, Nice to meet you, %s! Don't be shy to ask me a question!" %( JarvisMainVar.USER_NAME[0]))
+		self.JarvisMISCVAPI.say("Nice to meet you, %s! Don't be shy to ask me a question!" %( JarvisMainVar.USER_NAME[0]))
 		self.JarvisMISCVAPI.runAndWait()
 		
 	def JarvisAskQuestion(self) :
@@ -205,13 +233,22 @@ class MiscJarvisAudio(object) :
 	def JarvisNewAudioQuery(self) :
 		self.JarvisMISCVAPI.say("Ask me something else, %s . " %(JarvisMainVar.USER_NAME[0]))
 		self.JarvisMISCVAPI.runAndWait()
+		
+	def JarvisInputError(self) :
+		self.JarvisMISCVAPI.say("Sorry, i didn't recognize that input . Can you try that again %s? " %(JarvisMainVar.USER_NAME[0]))
+		self.JarvisMISCVAPI.runAndWait()
 	
+	def JarvisTryAgainErr(self) :
+		self.JarvisMISCVAPI.say("Try again, %s . But try to be more specific. I only have so much processing power!" %(JarvisMainVar.USER_NAME[0]))
+		self.JarvisMISCVAPI.runAndWait()
+		
 	def JarvisExitAudio(self) :
 		self.JarvisMISCVAPI.say("I will now shutdown. Goodbye %s ." %(JarvisMainVar.USER_NAME[0]))
 		self.JarvisMISCVAPI.runAndWait()
 		
 class JarvisTimeKeeping(object) :
 	""" Jarvis time telling class """
+	
 	def JTime(self) :
 		return strftime("%a, %d %b %Y %H:%M:%S \n", gmtime())
 		
