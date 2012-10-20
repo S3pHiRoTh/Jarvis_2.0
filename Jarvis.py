@@ -111,7 +111,7 @@ class Jarvis(object) :
 			self.JarvisClassVoiceAPI.JarvisEmpty()
 			raw_input()
 			self.UserResponse()
-		elif JarvisMainVar.JarvisTellTheTime or JarvisTellTheTime1 in (str(UI.lower())) :
+		elif JarvisMainVar.JarvisTellTheTime in (str(UI.lower())) :
 			# Call Jarvis time keeping class
 			JT = JarvisTimeKeeping()
 			JT.JTime()
