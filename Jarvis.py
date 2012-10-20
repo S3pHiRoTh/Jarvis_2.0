@@ -23,7 +23,7 @@ import JarvisVoiceAPI, JarvisTopics, JarvisRandomQuestion, JarvisResponseDB, Jar
 class Jarvis(object) :
 	""" This will be the main Jarvis Class """
 	
-	def __init__(self) :
+	def __init__(self, JVersion) :
 		# Call the {JarvisVoiceAPI} Class file
 		self.JarvisClassVoiceAPI = JarvisVoiceAPI.JarvisVoiceAPI()
 	
@@ -111,7 +111,7 @@ class Jarvis(object) :
 			self.JarvisClassVoiceAPI.JarvisEmpty()
 			raw_input()
 			self.UserResponse()
-		elif (str(UI.lower())) in JarvisMainVar.JarvisTellTheTime :
+		elif JarvisMainVar.JarvisTellTheTime or JarvisTellTheTime1 in (str(UI.lower())) :
 			# Call Jarvis time keeping class
 			JT = JarvisTimeKeeping()
 			JT.JTime()
@@ -120,12 +120,13 @@ class Jarvis(object) :
 			print "%s%s The current time is : " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT), JT.JTime()
 			self.JarvisNewQuestQuery()
 		else :
-			print "%s%s Hmm, i didn't recognize that input :( . Can you try that again %s? \n" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
+			print "%s%s Hmm, i didn't recognize that input :( , %s. \n" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
 			self.JarvisMiscAudioClass.JarvisInputError()
+			self.JarvisQuestError()
 			self.UserResponse()
 			
 	def JarvisQuestError(self) :
-		print "%s%s Try again, %s . But try to be more specific. I only have so much processing power!" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
+		print "%s%s Try again, %s . But try to be more specific this time. I only have so much processing power!" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
 		self.JarvisMiscAudioClass.JarvisTryAgainErr()
 		
 	def JarvisNewQuestQuery(self) :
@@ -235,11 +236,12 @@ class MiscJarvisAudio(object) :
 		self.JarvisMISCVAPI.runAndWait()
 		
 	def JarvisInputError(self) :
-		self.JarvisMISCVAPI.say("Sorry, i didn't recognize that input . Can you try that again %s? " %(JarvisMainVar.USER_NAME[0]))
+		self.JarvisMISCVAPI.say("Sorry, i didn't recognize that input ,%s . " %(JarvisMainVar.USER_NAME[0]))
 		self.JarvisMISCVAPI.runAndWait()
 	
 	def JarvisTryAgainErr(self) :
-		self.JarvisMISCVAPI.say("Try again, %s . But try to be more specific. I only have so much processing power!" %(JarvisMainVar.USER_NAME[0]))
+		self.JarvisMISCVAPI.say("Try again, %s . But try to be more specific this time." %(JarvisMainVar.USER_NAME[0]))
+		self.JarvisMISCVAPI.say("I only have so much processing power!")
 		self.JarvisMISCVAPI.runAndWait()
 		
 	def JarvisExitAudio(self) :
@@ -279,7 +281,8 @@ class JarvisMainVar(object) :
 	POSSIBLE_EXIT_COM = ['exit', 'leave', 'cya', 'bye']
 	JCOMTRUE = ("y", "yes", "yes please", "yep", "change my name", "name change", "yeah", "ye")
 	JCOMFALSE = ("n", "no", "im not bothered", "no thanks", "nope", "user is fine")
-	JarvisTellTheTime = ( "time", "whats the current time", "tell the time", "whats the time?" )
+	JarvisTellTheTime = "time"
+	JarvisTellTheTime1 = "clock"
 	
 	# Jarvis Dialogue for {JarvisHelp.help()}
 	JD1 = "How to correctly interact with me. "
@@ -291,8 +294,7 @@ class JarvisMainVar(object) :
 		
 def main() :
 	# Call the main class
-	os.system("title Jarvis Bot [V.2.0]")		# Jarvis Console window title 
-	init = Jarvis()
+	init = Jarvis(JVersion = os.system("title Jarvis Bot [V.2.0] - Beta [1.0] "))
 	init.Jarvis_Intro()
 	Jarvis.JarvisVAPI.runAndWait()
 	raw_input()
