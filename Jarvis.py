@@ -7,12 +7,17 @@
 
 """
 
+""" This source code for Jarvis Bot [2.0] and its accompanied classes was written soley by A.Taylor, and should not be 
+distributed or copied without crediting the original author. This source code can be used in whatever projects you wish to use it in.
+But i, the original author : A.Taylor. Request that the original credits stay intact.
+"""
+
 # Import framework
 from os import system
 from random import choice
 
 # Import whole Framework module
-import os, sqlite3, pyttsx	# Sqlite3 will be used later to create the Jarvis response Database. pyttsx is the voice API Jarvis will use.
+import os, pyttsx	# Pyttsx is the voice API Jarvis will use.
 
 # Import Time telling modules
 from time import gmtime, strftime
@@ -22,6 +27,7 @@ import JarvisVoiceAPI, JarvisTopics, JarvisRandomQuestion, JarvisResponseDB, Jar
 
 class Jarvis(object) :
 	""" This will be the main Jarvis Class """
+	REPEAT = 0
 	
 	def __init__(self, JVersion) :
 		# Call the {JarvisVoiceAPI} Class file
@@ -32,6 +38,12 @@ class Jarvis(object) :
 		
 		# Call the {JarvisHelp} Class
 		self.sh = JarvisHelp()
+		
+		# Call the {JarvisResponseDB.JarvisResponse} Class
+		self.ResponseDB = JarvisResponseDB.JarvisResponse()
+		
+		# Call the {JarvisResponseDB.JarvisCommands} Class
+		self.ResponseDB_COM = JarvisResponseDB.JarvisCommands()
 		
 		""" This constructor will create the introduction to Jarvis """
 		
@@ -83,12 +95,12 @@ class Jarvis(object) :
 	def UserInput(self) :
 		# I'll start writing the console commands first, then onto the actual response code.
 		UI = raw_input()
-		if (str(UI.lower())) in JarvisMainVar.POSSIBLE_EXIT_COM :
+		if ((str(UI.lower())) in JarvisMainVar.POSSIBLE_EXIT_COM) :
 			print "%s%s I will now shutdown. Goodbye %s . " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
 			self.JarvisMiscAudioClass.JarvisExitAudio()
 			raw_input()
 			exit()
-		elif (str(UI.lower()) == "help") :
+		elif (str(UI.lower()) == self.ResponseDB_COM.Help) :
 			print \
 			"""
 			Welcome to the help menu. Below is the list
@@ -106,12 +118,13 @@ class Jarvis(object) :
 			self.sh.help()
 			
 		# Error catching
-		elif UI in JarvisMainVar.ERROR :
+		elif (UI in JarvisMainVar.ERROR) :
 			print "%s%s I don't respond to empty spaces. " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT)
 			self.JarvisClassVoiceAPI.JarvisEmpty()
 			raw_input()
 			self.UserResponse()
-		elif JarvisMainVar.JarvisTellTheTime in (str(UI.lower())) :
+		# Misc commands
+		elif (JarvisMainVar.JarvisTellTheTime in (str(UI.lower()))) :
 			# Call Jarvis time keeping class
 			JT = JarvisTimeKeeping()
 			JT.JTime()
@@ -119,12 +132,19 @@ class Jarvis(object) :
 			self.JarvisClassVoiceAPI.JarvisVoiceTellTime()
 			print "%s%s The current time is : " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT), JT.JTime()
 			self.JarvisNewQuestQuery()
+		# Greeting responses
+		elif (self.ResponseDB.Greeting_EN in (str(UI.lower()))) :
+			while True :
+				if UI in JarvisMainVar.REPEAT :
+					JarvisMainVar.REPEAT[UI] += 1
+					print "%s%s you already said %s %s times." %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, UI, JarvisMainVar.REPEAT)
+					self.JarvisNewQuestQuery()
 		else :
 			print "%s%s Hmm, i didn't recognize that input :( , %s. \n" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
 			self.JarvisMiscAudioClass.JarvisInputError()
 			self.JarvisQuestError()
 			self.UserResponse()
-			
+
 	def JarvisQuestError(self) :
 		print "%s%s Try again, %s . But try to be more specific this time. I only have so much processing power!" %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
 		self.JarvisMiscAudioClass.JarvisTryAgainErr()
@@ -133,7 +153,6 @@ class Jarvis(object) :
 		print "%s%s Ask me something else, %s . " %(JarvisMainVar.BOT_NAME[0], JarvisMainVar.MISC_BOT, JarvisMainVar.USER_NAME[0])
 		self.JarvisMiscAudioClass.JarvisNewAudioQuery()
 		self.UserInput()
-		
 		
 class JarvisHelp(object) :
 	""" Class that will manage Jarvis's help function """
@@ -219,6 +238,10 @@ class MiscJarvisAudio(object) :
 	
 	JarvisMISCVAPI = pyttsx.init("sapi5")
 	
+	def JarvisGreeting(self) :
+		self.JarvisMISCVAPI.say("I'm fine, thanks. %s" %(JarvisMainVar.USER_NAME[0]))
+		self.JarvisMISCVAPI.runAndWait()
+		
 	def JarvisRNTrue(self) :
 		self.JarvisMISCVAPI.say("username changed successfully to %s! " %(JarvisMainVar.USER_NAME[0]))
 		self.JarvisMISCVAPI.runAndWait()
@@ -257,6 +280,8 @@ class JarvisTimeKeeping(object) :
 class JarvisMainVar(object) :
 	""" Jarvis's variable storage class. All the main variables go into this class. """
 
+	# Repeating Response Catching
+	Repeat = {}
 	# Jarvis's botname variables
 	BOT_NAME = ['Jarvis']
 	MISC_BOT = " : "
@@ -296,7 +321,6 @@ def main() :
 	# Call the main class
 	init = Jarvis(JVersion = os.system("title Jarvis Bot [V.2.0] - Beta [1.0] "))
 	init.Jarvis_Intro()
-	Jarvis.JarvisVAPI.runAndWait()
 	raw_input()
 	
 # Call the class, and function
