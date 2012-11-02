@@ -1,15 +1,21 @@
 
 Jarvis Bot [V.2.0] Readme!
-==========================
+------------------
+
+
+
+
 
 What is "Jarvis Bot" ?
-======================
+------------------
+
 
 Jarvis Bot is a chatbot that responds to user input.
 
 
 OK! Cool, how do i use it?
-=========================
+------------------
+
 
 You need three things installed on your computer. The following prerequisites are below.
 
@@ -23,17 +29,20 @@ Prerequisites
 
 3 - Pywin32
 
+
 Download Locations 
 ------------------
 
-Pyttsx for 32 bit and 64 bit operating systems
-============
+
+
+Pyttsx for 32 bit and 64 bit operating systems :
+
 
 	Pyttsx - http://pypi.python.org/packages/any/p/pyttsx/pyttsx-1.0.win32.exe#md5=1bdf526eec286b683d61d97eb2922d4a
 
 
 For 32 Bit operating systems : 
-============
+
 
 	Python - http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi
 
@@ -42,16 +51,15 @@ For 32 Bit operating systems :
 
 
 For 64 Bit operating systems :
-============
+
 
 	python - http://python.org/ftp/python/2.7.3/python-2.7.3.amd64.msi
 
-	Pywin32 - 
 
-Note
-============
+Note about pywin32
+
  
-	To check if your system is 64 bit, even though it says you have 64 bit. Check how much Ram is usable if you have 4GB 	Ram or more. If it says 3.75 GB ram usable, download python and pywin32 for the 32 bit OS. If you can use the full 	amount of 4GB ram, download the 64 bit python and pywin32 .
+	To check if your system is 64 bit, even though it says you have 64 bit. Check how much Ram is usable if you have 4GB 	Ram 	or more. If it says 3.75 GB ram usable, download python and pywin32 for the 32 bit OS. If you can use the full 	amount of 4GB ram, 	download the 64 bit python and pywin32 .
 
 
 Installation Instructions
