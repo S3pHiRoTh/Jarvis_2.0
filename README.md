@@ -1,10 +1,9 @@
-
 Jarvis Bot [V.2.0] Readme!
 ------------------
 
 
-
-
+Note :
+	Jarvis 2.0 is a discontinued project due to requiring too many external dependancies. i am now in the process of creating a new AI chatbot in C++.
 
 What is "Jarvis Bot" ?
 ------------------
