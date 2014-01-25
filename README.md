@@ -78,6 +78,7 @@ Jarvis Bot [2.0] Credits
 --------------
 
 Programmer - A.Taylor (S3pHiRoTh)
+
 Debugger & Tester - P.Rogers
 
 
